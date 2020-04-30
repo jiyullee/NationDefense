@@ -8,6 +8,7 @@ public class City : MonoBehaviour
     [SerializeField] protected string cityName;
     [SerializeField] protected Text nameText;
     [SerializeField] SpriteRenderer spriteRenderer;
+    [SerializeField] LayerMask layerMask;
     void Start()
     {
         
@@ -17,11 +18,20 @@ public class City : MonoBehaviour
     {
         spriteRenderer.color = Color.red;
         gameObject.tag = "Infect";
+        gameObject.layer = 8;
     }
 
     public void Infect_Old()
     {
-        
-        
+        Collider2D[] aroundCities = Physics2D.OverlapCircleAll(transform.position, 50f, layerMask);
+        print(cityName + " " + aroundCities.Length);
+        Random.InitState((int)(Time.time * 100f));
+
+        if (aroundCities.Length == 0)
+            return;
+
+        int rand = Random.Range(0, aroundCities.Length);
+        aroundCities[rand].gameObject.GetComponentInParent<City>().Infect_New();
+
     }
 }

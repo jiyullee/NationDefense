@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4976673517814677951}
   - component: {fileID: 1148967633449297530}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -91,7 +91,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2774139563572670365}
   - component: {fileID: 3256490352428860449}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Down
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -172,7 +172,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6708798272015350469}
   - component: {fileID: 143584522582965057}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Up
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -255,7 +255,7 @@ GameObject:
   - component: {fileID: 8065203434850053277}
   - component: {fileID: 5071937748330281013}
   - component: {fileID: 4682979894505888815}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -352,7 +352,7 @@ GameObject:
   m_Component:
   - component: {fileID: 951751535213365045}
   - component: {fileID: 9053648037592598930}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -434,7 +434,7 @@ GameObject:
   - component: {fileID: 321388235862804734}
   - component: {fileID: 8279089389497165687}
   - component: {fileID: 523057419666653139}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -510,7 +510,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7955584749929351883}
   - component: {fileID: 7955584749929351882}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: City_Metropolitan
   m_TagString: Uninfect
   m_Icon: {fileID: 0}
@@ -552,6 +552,9 @@ MonoBehaviour:
   cityName: "\uC11C\uC6B8"
   nameText: {fileID: 523057419666653139}
   spriteRenderer: {fileID: 3522627638239189772}
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 512
 --- !u!1 &8869042409847845504
 GameObject:
   m_ObjectHideFlags: 0
@@ -563,7 +566,7 @@ GameObject:
   - component: {fileID: 2375597015320541398}
   - component: {fileID: 3522627638239189772}
   - component: {fileID: 5863836159528146814}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: New Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
