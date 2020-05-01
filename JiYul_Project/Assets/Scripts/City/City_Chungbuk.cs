@@ -4,8 +4,5 @@ using UnityEngine;
 
 public class City_Chungbuk : City
 {
-    void Start()
-    {
-        nameText.text = cityName;
-    }
+
 }

@@ -7,11 +7,12 @@ public class City : MonoBehaviour
 {
     [SerializeField] protected string cityName;
     [SerializeField] protected Text nameText;
-    [SerializeField] SpriteRenderer spriteRenderer;
+    [SerializeField] protected SpriteRenderer spriteRenderer;
     [SerializeField] LayerMask layerMask;
-    void Start()
+
+    public string GetName()
     {
-        
+        return cityName;
     }
 
     public void Infect_New()

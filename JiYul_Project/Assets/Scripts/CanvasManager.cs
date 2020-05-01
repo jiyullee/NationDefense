@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class CanvasManager : MonoBehaviour
 {
     private static CanvasManager instance;
-    private static CanvasManager Instance
+    public static CanvasManager Instance
     {
         get
         {
@@ -19,6 +19,15 @@ public class CanvasManager : MonoBehaviour
     }
 
     [SerializeField] Button roundStartBtn;
+    [SerializeField] GameObject cityUI;
 
-    
+    public void OnClick_CityUI()
+    {
+        cityUI.SetActive(true);
+    }
+
+    public void OnClick_DisableCityUI()
+    {
+        cityUI.SetActive(false);
+    }
 }
