@@ -21,10 +21,17 @@ public class CanvasManager : MonoBehaviour
     [SerializeField] Button roundStartBtn;
     [SerializeField] GameObject cityUI;
 
-    public void OnClick_CityUI()
+    UI_CityInfo UI_city;
+    private void Awake()
+    {
+        UI_city = cityUI.GetComponent<UI_CityInfo>();
+    }
+    public void Change_CityInfo(string tag, string name, string state, int hp, int damage, int cost)
     {
         cityUI.SetActive(true);
+        UI_city.ChangeCityInfo(tag, name, state, hp, damage, cost);
     }
+    
 
     public void OnClick_DisableCityUI()
     {

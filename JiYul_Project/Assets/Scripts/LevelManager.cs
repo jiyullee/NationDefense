@@ -42,7 +42,7 @@ public class LevelManager : MonoBehaviour
             if(uninfected_Cities.Length != 0)
             {
                 int rand = Random.Range(0, uninfected_Cities.Length);
-                uninfected_Cities[rand].GetComponent<City>().Infect_New();
+                uninfected_Cities[rand].GetComponent<City>().Infect_New(damage);
             }
             
         }
@@ -50,7 +50,7 @@ public class LevelManager : MonoBehaviour
         
         for (int i = 0; i < infected_Cities.Length; i++)
         {
-            infected_Cities[i].GetComponent<City>().Infect_Old();
+            infected_Cities[i].GetComponent<City>().Infect_Old(damage);
 
         }
     }
