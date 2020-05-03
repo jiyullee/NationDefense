@@ -8,18 +8,26 @@ public class City_CanvasManager : MonoBehaviour
     City city;
     [SerializeField] Button button;
     [SerializeField] protected Text nameText;
+    [SerializeField] GameObject cityInfo;
 
     private void Awake()
     {
         city = GetComponentInParent<City>();
     }
-    public void OnClick_CityUI()
+
+    public void OnClick_City()
     {
-        int damage = city.Damage;
-        int hp = city.Hp;
-        int cost = city.Cost;
-        string cityName = city.CityName;
-        string stateName = city.StateName;
-        CanvasManager.Instance.Change_CityInfo(city.tag, cityName, stateName, hp, damage, cost);
+        UI_CityInfo[] city_UIs = FindObjectsOfType<UI_CityInfo>();
+        foreach(UI_CityInfo ui_CityInfo in city_UIs)
+        {
+            ui_CityInfo.gameObject.SetActive(false);
+        }
+        cityInfo.SetActive(true);
+        cityInfo.GetComponent<UI_CityInfo>().SetInfo();
+    }
+
+    public void OnClick_DisableUI()
+    {
+        cityInfo.SetActive(false);
     }
 }

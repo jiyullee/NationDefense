@@ -19,22 +19,24 @@ public class CanvasManager : MonoBehaviour
     }
 
     [SerializeField] Button roundStartBtn;
-    [SerializeField] GameObject cityUI;
+    [SerializeField] Image timeObj;
+    [SerializeField] Text roundText;
+    private void Update()
+    {
+        if (!LevelManager.Instance.IsRound)
+        {
+            timeObj.gameObject.SetActive(true);
+            timeObj.fillAmount = LevelManager.Instance.CurrentWaitRoundTime / LevelManager.Instance.TotalWaitRoundTime;
+        }
+        else
+        {
+            timeObj.gameObject.SetActive(false);
+        }
 
-    UI_CityInfo UI_city;
-    private void Awake()
-    {
-        UI_city = cityUI.GetComponent<UI_CityInfo>();
     }
-    public void Change_CityInfo(string tag, string name, string state, int hp, int damage, int cost)
-    {
-        cityUI.SetActive(true);
-        UI_city.ChangeCityInfo(tag, name, state, hp, damage, cost);
-    }
-    
 
-    public void OnClick_DisableCityUI()
+    public void SetRoundText(int round)
     {
-        cityUI.SetActive(false);
+        roundText.text = round.ToString();
     }
 }

@@ -6,40 +6,86 @@ public class UI_CityInfo : MonoBehaviour
 {
     [SerializeField] private Text stateText;
     [SerializeField] private Text nameText;
+    [SerializeField] private Text costText;
+    [SerializeField] private Text hpText;
+    [SerializeField] private Text damageText;
+    [SerializeField] Button buyBtn;
+    [SerializeField] Button upgradeBtn;
     [SerializeField] private GameObject hpObj;
     [SerializeField] private GameObject damageObj;
-    [SerializeField] private Text costText;
-    void Start()
+
+
+    City city;
+    Image damageImg;
+    Image hpImg;
+    private void Awake()
     {
+        city = GetComponentInParent<City>();
+        damageImg = damageObj.GetComponentInChildren<Image>();
+        hpImg = hpObj.GetComponentInChildren<Image>();
+    }
+
+    private void Update()
+    {
+        // 8 - 미감염, 9 - 감염, 10 - 구매
+        if(city.gameObject.layer == 8)
+        {
+            Uninfected();
+        }
+        else if(city.gameObject.layer == 9)
+        {
+            Infected();
+        }else if(city.gameObject.layer == 10)
+        {
+            Taken();
+        }
+    }
+
+    private void Uninfected()
+    {
+        buyBtn.gameObject.SetActive(true);
+        upgradeBtn.gameObject.SetActive(false);
+        hpObj.SetActive(false);
+        damageObj.SetActive(false);
+        
+    }
+    private void Infected()
+    {
+        buyBtn.gameObject.SetActive(true);
+        upgradeBtn.gameObject.SetActive(false);
+        hpObj.SetActive(false);
+        damageObj.SetActive(true);
+        damageImg.fillAmount = (float)city.Damage / city.MaxDamage;
+        damageText.text = city.Damage + "/" + city.MaxDamage;
+    }
+
+    private void Taken()
+    {
+        buyBtn.gameObject.SetActive(false);
+        upgradeBtn.gameObject.SetActive(true);
+        hpObj.SetActive(true);
+        damageObj.SetActive(false);
+        hpImg.fillAmount = (float)city.Hp / city.MaxHP;
+        hpText.text = city.Hp + "/" + city.MaxHP;
+    }
+
+    public void SetInfo()
+    {
+        stateText.text = city.StateName;
+        nameText.text = city.CityName;
+        costText.text = city.Cost.ToString();
         
     }
 
-    public void ChangeCityInfo(string tag, string name, string state, int hp, int damage, int cost)
+    public void OnClick_BuyCity()
     {
-        if(tag == "Uninfect")
-        {
-            stateText.text = state;
-            nameText.text = name;
-            costText.text = cost.ToString();
-        }
-        else if(tag == "Infect")
-        {
-            stateText.text = state;
-            nameText.text = name;
-            damageObj.SetActive(true);
-            damageObj.GetComponentInChildren<Text>().text = damage.ToString();
-        }
-        else if(tag == "Taken")
-        {
-            stateText.text = state;
-            nameText.text = name;
-            hpObj.SetActive(true);
-            hpObj.GetComponentInChildren<Text>().text = damage.ToString();
-        }
+        buyBtn.gameObject.SetActive(false);
+        city.Buy();
     }
 
-    public void OnClick_DisableUI()
+    public void OnClick_Upgrade()
     {
-        gameObject.SetActive(false);
+        city.Upgrade();
     }
+    
 }
