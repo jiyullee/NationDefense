@@ -9,6 +9,8 @@ public class UI_CityInfo : MonoBehaviour
     [SerializeField] private Text costText;
     [SerializeField] private Text hpText;
     [SerializeField] private Text damageText;
+    [SerializeField] private Text situationText;
+    [SerializeField] private Text day_SituationText;
     [SerializeField] Button buyBtn;
     [SerializeField] Button upgradeBtn;
     [SerializeField] private GameObject hpObj;
@@ -18,6 +20,10 @@ public class UI_CityInfo : MonoBehaviour
     City city;
     Image damageImg;
     Image hpImg;
+
+    public Text SituationText { get => situationText; set => situationText = value; }
+    public Text Day_SituationText { get => day_SituationText; set => day_SituationText = value; }
+
     private void Awake()
     {
         city = GetComponentInParent<City>();
@@ -47,7 +53,7 @@ public class UI_CityInfo : MonoBehaviour
         upgradeBtn.gameObject.SetActive(false);
         hpObj.SetActive(false);
         damageObj.SetActive(false);
-        
+        day_SituationText.gameObject.SetActive(false);
     }
     private void Infected()
     {
@@ -55,7 +61,7 @@ public class UI_CityInfo : MonoBehaviour
         upgradeBtn.gameObject.SetActive(false);
         hpObj.SetActive(false);
         damageObj.SetActive(true);
-        damageImg.fillAmount = (float)city.Damage / city.MaxDamage;
+        damageImg.fillAmount = city.Damage / city.MaxDamage;
         damageText.text = city.Damage + "/" + city.MaxDamage;
     }
 
@@ -65,6 +71,7 @@ public class UI_CityInfo : MonoBehaviour
         upgradeBtn.gameObject.SetActive(true);
         hpObj.SetActive(true);
         damageObj.SetActive(false);
+        day_SituationText.gameObject.SetActive(false);
         hpImg.fillAmount = (float)city.Hp / city.MaxHP;
         hpText.text = city.Hp + "/" + city.MaxHP;
     }

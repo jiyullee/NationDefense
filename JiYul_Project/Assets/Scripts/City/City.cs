@@ -5,9 +5,10 @@ using UnityEngine.UI;
 
 public class City : MonoBehaviour
 {
+    [SerializeField] private UI_CityInfo UI_CityInfo;
+
     [SerializeField] private string stateName;
     [SerializeField] private string cityName;
-    [SerializeField] LayerMask layerMask;
 
     [SerializeField] private int cost;
     [SerializeField] private int hp;
@@ -22,11 +23,12 @@ public class City : MonoBehaviour
     public string CityName { get => cityName; set => cityName = value; }
     public int Cost { get => cost; set => cost = value; }
     public int MaxHP { get => maxHP; set => maxHP = value; }
-    public int MaxDamage { get => maxDamage; set => maxDamage = value; }
     public int Class { get => _class; set => _class = value; }
+    public int MaxDamage { get => maxDamage; set => maxDamage = value; }
 
     private void Start()
     {
+        
         string city_Class = cityName.Substring(cityName.Length - 1, 1);
         if (city_Class == "군")
             cost = 1;
@@ -38,50 +40,17 @@ public class City : MonoBehaviour
             cost = 4;
         _class = 1;
         maxHP = 5;
-        maxDamage = 5;
+        maxDamage = 50;
         hp = maxHP;
 
     }
 
-    public void Infect_New()
-    {
-        if(gameObject.layer == 8)
-        {
-            damage = maxDamage;
-            gameObject.layer = 9;
-        }
-        else if(gameObject.layer == 10)
-        {
-            hp -= LevelManager.Instance.Round % 10;
-            if(hp < 0)
-            {
-                damage = LevelManager.Instance.Round % 10 - hp;
-                gameObject.layer = 9;
-            }
-            else if(hp == 0)
-            {
-                gameObject.layer = 8;
-            }
-        }
-    }
-
-    public void Infect_Old()
-    {
-        Collider2D[] aroundCities = Physics2D.OverlapCircleAll(transform.position, 50f, layerMask);
-        Random.InitState((int)(Time.time * 100f));
-
-        if (aroundCities.Length == 0)
-            return;
-
-        int rand = Random.Range(0, aroundCities.Length);
-        aroundCities[rand].gameObject.GetComponentInParent<City>().Infect_New();
-
-    }
-
+    
     public void Buy()
     {
         gameObject.layer = 10;
         hp = 5;
+        UI_CityInfo.SituationText.text = "안전";
     }
 
     public void Upgrade()
@@ -105,6 +74,5 @@ public class City : MonoBehaviour
             }
         }
     }
-
-
+    
 }

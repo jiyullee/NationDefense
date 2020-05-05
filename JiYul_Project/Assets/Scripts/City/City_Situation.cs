@@ -5,8 +5,12 @@ using UnityEngine;
 public class City_Situation : MonoBehaviour
 {
     [SerializeField] SpriteRenderer spriteRenderer;
+    private City city;
+    private City_Damage City_Damage;
     void Start()
     {
+        city = GetComponent<City>();
+        City_Damage = GetComponent<City_Damage>();
         StartCoroutine(Situation());
     }
 
@@ -19,6 +23,7 @@ public class City_Situation : MonoBehaviour
             {
                 gameObject.tag = "Uninfect";
                 spriteRenderer.color = Color.white;
+                City_Damage.Disaster_Count = 0;
             }
             else if(gameObject.layer == 9)
             {
@@ -29,6 +34,7 @@ public class City_Situation : MonoBehaviour
             {
                 gameObject.tag = "Taken";
                 spriteRenderer.color = Color.blue;
+                City_Damage.Disaster_Count = 0;
             }
         }
     }

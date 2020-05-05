@@ -35,6 +35,11 @@ public class CanvasManager : MonoBehaviour
 
     }
 
+    public void OnClick_StartRound()
+    {
+        LevelManager.Instance.StartDay();
+    }
+
     public void SetRoundText(int round)
     {
         roundText.text = round.ToString();

@@ -20,9 +20,11 @@ public class LevelManager : MonoBehaviour
     public float CurrentWaitRoundTime { get => currentWaitRoundTime; set => currentWaitRoundTime = value; }
     public bool IsRound { get => isRound; set => isRound = value; }
     public float TotalWaitRoundTime { get => totalWaitRoundTime; set => totalWaitRoundTime = value; }
-    public int Round { get => round; set => round = value; }
+    public int Day { get => day; set => day = value; }
+    public int Phase { get => phase; set => phase = value; }
 
-    [SerializeField] private int round;
+    [SerializeField] private int phase;
+    [SerializeField] private int day;
     private int enemyCount = 1;
     private int damage = 1;
 
@@ -34,8 +36,8 @@ public class LevelManager : MonoBehaviour
 
     void Start()
     {
-        round = 1;
-        CanvasManager.Instance.SetRoundText(round);
+        day = 0;
+        CanvasManager.Instance.SetRoundText(day);
         currentWaitRoundTime = TotalWaitRoundTime;
      
     }
@@ -47,42 +49,58 @@ public class LevelManager : MonoBehaviour
             currentWaitRoundTime -= Time.deltaTime;
             if(currentWaitRoundTime <= 0)
             {
-                StartRound();
+                StartDay();
                 currentWaitRoundTime = totalWaitRoundTime;
             }
         }
     }
 
-    public void StartRound()
+    public void StartDay()
     {
-        CanvasManager.Instance.SetRoundText(++round);
         isRound = true;
-        GameObject[] uninfected_Cities = GameObject.FindGameObjectsWithTag("Uninfect");
+        day++;
         GameObject[] infected_Cities = GameObject.FindGameObjectsWithTag("Infect");
-        City[] cities = GameObject.FindObjectsOfType<City>();
-        Random.InitState((int)(Time.time * 100f));
-        enemyCount = round % 10;
-        damage = enemyCount;
-
-        for (int i = 0; i < enemyCount; i++)
+        foreach(GameObject city in infected_Cities)
         {
-            if(cities.Length != 0)
-            {
-                int rand = Random.Range(0, cities.Length);
-                cities[rand].Infect_New();
-            }
-            
+            city.GetComponent<City_Damage>().IncreaseCount();
+            city.GetComponent<City_Damage>().Spread_Disaster();
         }
-
-        /*
-        for (int i = 0; i < infected_Cities.Length; i++)
-        {
-            infected_Cities[i].GetComponent<City>().Infect_Old(damage);
-
-        }
-        */
-        currentWaitRoundTime = totalWaitRoundTime;
-        isRound = false;
+        CanvasManager.Instance.SetRoundText(day);
+        SelectDisaster();
     }
+
+    public void SelectDisaster()
+    {
+        
+        if (day % 10 != 0)
+        {
+            Enemy_Class_1 enemy_Class_1 = FindObjectOfType<Enemy_Class_1>();
+            enemy_Class_1.SelectDisaster();
+        }else if (day == 10)
+        {
+            Enemy_Class_2 enemy_Class_2 = FindObjectOfType<Enemy_Class_2>();
+            enemy_Class_2.SelectDisaster();
+
+        }
+        else if(day == 20)
+        {
+            Enemy_Class_2 enemy_Class_2 = FindObjectOfType<Enemy_Class_2>();
+            enemy_Class_2.SelectDisaster();
+        }else if(day == 30)
+        {
+            Enemy_Class_3 enemy_Class_3 = FindObjectOfType<Enemy_Class_3>();
+            enemy_Class_3.SelectDisaster();
+        }else if(day == 40)
+        {
+            Enemy_Class_4 enemy_Class_4 = FindObjectOfType<Enemy_Class_4>();
+            enemy_Class_4.SelectDisaster();
+        }else if(day == 50)
+        {
+
+            Enemy_Class_5 enemy_Class_5 = FindObjectOfType<Enemy_Class_5>();
+            enemy_Class_5.SelectDisaster();
+        }
+    }
+    
 
 }
