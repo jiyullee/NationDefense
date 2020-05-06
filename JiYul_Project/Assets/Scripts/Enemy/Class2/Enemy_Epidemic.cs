@@ -14,7 +14,7 @@ public class Enemy_Epidemic : Enemy_Class_2
         infectedCity = cities[rand];
         infectedCity.Disaster_Class = 2;
         infectedCity.Disaster = "전염병";
-        cities[rand].Start_Disaster();
+        cities[rand].Start_Disaster(damage);
 
         LevelManager.Instance.IsRound = false;
     }

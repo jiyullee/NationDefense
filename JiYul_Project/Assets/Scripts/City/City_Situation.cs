@@ -24,6 +24,7 @@ public class City_Situation : MonoBehaviour
                 gameObject.tag = "Uninfect";
                 spriteRenderer.color = Color.white;
                 City_Damage.Disaster_Count = 0;
+                City_Damage.Disaster = "";
             }
             else if(gameObject.layer == 9)
             {

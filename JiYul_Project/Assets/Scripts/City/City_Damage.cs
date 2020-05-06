@@ -20,22 +20,22 @@ public class City_Damage : MonoBehaviour
         city = GetComponent<City>();
     }
 
-    public void Start_Disaster()
+    public void Start_Disaster(int damage)
     {
         if (gameObject.layer == 8) // 미감염 
         {
             IncreaseCount();
-            city.Damage = 5;
+            city.Damage = damage;
             gameObject.layer = 9;
             UI_CityInfo.SituationText.text = disaster;
         }
         else if (gameObject.layer == 10) // 안전
         {
-            city.Hp -= LevelManager.Instance.Day % 10;
+            city.Hp -= damage;
             if (city.Hp < 0)
             {
                 IncreaseCount();
-                city.Damage = LevelManager.Instance.Day % 10 - city.Hp;
+                city.Damage = damage - city.Hp;
                 gameObject.layer = 9;
                 UI_CityInfo.SituationText.text = disaster;
             }
@@ -49,13 +49,14 @@ public class City_Damage : MonoBehaviour
             }
         }else if(gameObject.layer == 9)
         {
-            city.Damage += disaster_Class;
+            city.Damage += damage;
             if(city.Damage >= city.MaxDamage)
             {
                 city.Damage = city.MaxDamage;
             }
         }
     }
+
 
     public void Spread_Disaster()
     {
@@ -71,7 +72,7 @@ public class City_Damage : MonoBehaviour
             City_Damage city = aroundCities[rand].gameObject.GetComponentInParent<City_Damage>();
             city.disaster = disaster;
             city.disaster_Class = disaster_Class;
-            city.Start_Disaster();
+            city.Start_Disaster(1);
         }
         else if(disaster_Class == 3)
         {

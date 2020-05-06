@@ -20,7 +20,10 @@ public class Enemy_Typhoon : Enemy_Class_3
 
     IEnumerator Typhoon()
     {
-        Collider2D[] near_Cities = Physics2D.OverlapAreaAll(transform.position, transform.position + new Vector3(100, 100, 0), layerMask);
+        Random.InitState((int)(Time.time * 100f));
+        int randX = Random.Range(20, 100);
+        int randY = Random.Range(20, 100);
+        Collider2D[] near_Cities = Physics2D.OverlapAreaAll(transform.position, transform.position + new Vector3(randX, randY, 0), layerMask);
         while(near_Cities.Length > 0)
         {
             for(int i = 0; i < near_Cities.Length; i++)
@@ -28,11 +31,11 @@ public class Enemy_Typhoon : Enemy_Class_3
                 City_Damage city = near_Cities[i].GetComponentInParent<City_Damage>();
                 city.Disaster = "태풍";
                 city.Disaster_Class = 3;
-                city.Start_Disaster();
+                city.Start_Disaster(damage);
                 yield return new WaitForSeconds(0.1f);
             }
-            transform.Translate(100, 100, 0);
-            near_Cities = Physics2D.OverlapAreaAll(transform.position, transform.position + new Vector3(100, 100, 0), layerMask);
+            transform.Translate(randX, randY, 0);
+            near_Cities = Physics2D.OverlapAreaAll(transform.position, transform.position + new Vector3(randX, randY, 0), layerMask);
         }
         LevelManager.Instance.IsRound = false;
         transform.position = originPos;

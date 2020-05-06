@@ -21,7 +21,7 @@ public class Enemy_Traffic_Accident : Enemy_Class_1
             infectedCity = cities[rand];
             infectedCity.Disaster_Class = 1;
             infectedCity.Disaster = "교통사고";
-            cities[rand].Start_Disaster();
+            cities[rand].Start_Disaster(damage);
             yield return new WaitForSeconds(0.5f);
         }
         LevelManager.Instance.IsRound = false;

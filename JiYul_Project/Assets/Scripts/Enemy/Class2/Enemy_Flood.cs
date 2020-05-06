@@ -14,7 +14,7 @@ public class Enemy_Flood : Enemy_Class_2
         infectedCity = cities[rand];
         infectedCity.Disaster_Class = 2;
         infectedCity.Disaster = "폭우";
-        cities[rand].Start_Disaster();
+        cities[rand].Start_Disaster(damage);
 
         LevelManager.Instance.IsRound = false;
     }

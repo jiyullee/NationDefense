@@ -14,7 +14,7 @@ public class Enemy_Earthquake : Enemy_Class_2
         infectedCity = cities[rand];
         infectedCity.Disaster_Class = 2;
         infectedCity.Disaster = "지진";
-        cities[rand].Start_Disaster();
+        cities[rand].Start_Disaster(damage);
 
         LevelManager.Instance.IsRound = false;
     }

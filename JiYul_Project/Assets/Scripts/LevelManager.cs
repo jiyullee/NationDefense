@@ -74,9 +74,10 @@ public class LevelManager : MonoBehaviour
         
         if (day % 10 != 0)
         {
-            Enemy_Class_1 enemy_Class_1 = FindObjectOfType<Enemy_Class_1>();
-            enemy_Class_1.SelectDisaster();
-        }else if (day == 10)
+            Enemy_Class_5 enemy_Class_5 = FindObjectOfType<Enemy_Class_5>();
+            enemy_Class_5.SelectDisaster();
+        }
+        else if (day == 10)
         {
             Enemy_Class_2 enemy_Class_2 = FindObjectOfType<Enemy_Class_2>();
             enemy_Class_2.SelectDisaster();

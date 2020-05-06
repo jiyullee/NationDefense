@@ -11,7 +11,7 @@ public class Enemy_Class_3 : Enemy
     protected City_Damage infectedCity;
     private void Awake()
     {
-        weight = new float[] { 0, 100f};
+        weight = new float[] { 100f, 0};
         enemy_Class_3s = new Enemy_Class_3[]{ FindObjectOfType<Enemy_Blackout>(), FindObjectOfType<Enemy_Typhoon>() };
     }
     override

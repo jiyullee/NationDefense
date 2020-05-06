@@ -4,6 +4,6 @@ using UnityEngine;
 
 abstract public class Enemy : MonoBehaviour
 {
-    
+    [SerializeField] protected int damage;
     abstract public void SelectDisaster();
 }

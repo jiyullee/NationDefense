@@ -13,7 +13,7 @@ public class Enemy_Blackout : Enemy_Class_3
         infectedCity = cities[rand];
         infectedCity.Disaster_Class = 3;
         infectedCity.Disaster = "정전";
-        infectedCity.Start_Disaster();
+        infectedCity.Start_Disaster(damage);
 
         StartCoroutine(Blackout());
     }
@@ -26,7 +26,7 @@ public class Enemy_Blackout : Enemy_Class_3
             City_Damage city_Damage = aroundCity.GetComponentInParent<City_Damage>();
             city_Damage.Disaster_Class = 3;
             city_Damage.Disaster = "정전";
-            city_Damage.Start_Disaster();
+            city_Damage.Start_Disaster(damage);
             yield return new WaitForSeconds(0.1f);
         }
         LevelManager.Instance.IsRound = false;
