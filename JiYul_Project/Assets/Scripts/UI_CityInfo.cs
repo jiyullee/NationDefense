@@ -17,45 +17,30 @@ public class UI_CityInfo : MonoBehaviour
     [SerializeField] private GameObject damageObj;
 
 
-    City city;
-    Image damageImg;
-    Image hpImg;
+    [SerializeField] private City city;
+    [SerializeField] private Image damageImg;
+    [SerializeField] private Image hpImg;
 
     public Text SituationText { get => situationText; set => situationText = value; }
     public Text Day_SituationText { get => day_SituationText; set => day_SituationText = value; }
+    public Text DamageText { get => damageText; set => damageText = value; }
 
-    private void Awake()
+    private void OnEnable()
     {
-        city = GetComponentInParent<City>();
-        damageImg = damageObj.GetComponentInChildren<Image>();
-        hpImg = hpObj.GetComponentInChildren<Image>();
+        costText.text = city.Cost.ToString();
     }
-
-    private void Update()
-    {
-        // 8 - 미감염, 9 - 감염, 10 - 구매
-        if(city.gameObject.layer == 8)
-        {
-            Uninfected();
-        }
-        else if(city.gameObject.layer == 9)
-        {
-            Infected();
-        }else if(city.gameObject.layer == 10)
-        {
-            Taken();
-        }
-    }
-
-    private void Uninfected()
+    public void Uninfected()
     {
         buyBtn.gameObject.SetActive(true);
         upgradeBtn.gameObject.SetActive(false);
         hpObj.SetActive(false);
         damageObj.SetActive(false);
+        costText.text = city.Cost.ToString();
+        situationText.text = "";
         day_SituationText.gameObject.SetActive(false);
     }
-    private void Infected()
+
+    public void Infected(string disaster, int disasterCount)
     {
         buyBtn.gameObject.SetActive(true);
         upgradeBtn.gameObject.SetActive(false);
@@ -63,9 +48,12 @@ public class UI_CityInfo : MonoBehaviour
         damageObj.SetActive(true);
         damageImg.fillAmount = city.Damage / city.MaxDamage;
         damageText.text = city.Damage + "/" + city.MaxDamage;
+        costText.text = city.Cost.ToString();
+        situationText.text = disaster;
+        day_SituationText.text = "위험" + disasterCount.ToString() + "일차";
     }
 
-    private void Taken()
+    public void Taken()
     {
         buyBtn.gameObject.SetActive(false);
         upgradeBtn.gameObject.SetActive(true);
@@ -74,6 +62,8 @@ public class UI_CityInfo : MonoBehaviour
         day_SituationText.gameObject.SetActive(false);
         hpImg.fillAmount = (float)city.Hp / city.MaxHP;
         hpText.text = city.Hp + "/" + city.MaxHP;
+        costText.text = city.Cost.ToString();
+        situationText.text = "안전";
     }
 
     public void SetInfo()
@@ -86,8 +76,7 @@ public class UI_CityInfo : MonoBehaviour
 
     public void OnClick_BuyCity()
     {
-        buyBtn.gameObject.SetActive(false);
-        city.Buy();
+        city.Buy();       
     }
 
     public void OnClick_Upgrade()

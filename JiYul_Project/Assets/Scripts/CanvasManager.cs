@@ -21,6 +21,12 @@ public class CanvasManager : MonoBehaviour
     [SerializeField] Button roundStartBtn;
     [SerializeField] Image timeObj;
     [SerializeField] Text roundText;
+    [SerializeField] Text coinText;
+    private void Start()
+    {
+        coinText.text = CoinManager.Instance.Gold.ToString();
+        roundText.text = "";
+    }
     private void Update()
     {
         if (!LevelManager.Instance.IsRound)
@@ -43,5 +49,10 @@ public class CanvasManager : MonoBehaviour
     public void SetRoundText(int round)
     {
         roundText.text = round.ToString();
+    }
+
+    public void SetCoinText(int coin)
+    {
+        coinText.text = coin.ToString();
     }
 }

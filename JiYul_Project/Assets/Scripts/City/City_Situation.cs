@@ -25,17 +25,22 @@ public class City_Situation : MonoBehaviour
                 spriteRenderer.color = Color.white;
                 City_Damage.Disaster_Count = 0;
                 City_Damage.Disaster = "";
+                city.Damage = 0;
+                city.Cost = city.StartCost;
             }
             else if(gameObject.layer == 9)
             {
                 gameObject.tag = "Infect";
                 spriteRenderer.color = Color.red;
+                city.Cost += city.Damage;
             }
             else if(gameObject.layer == 10)
             {
                 gameObject.tag = "Taken";
                 spriteRenderer.color = Color.blue;
                 City_Damage.Disaster_Count = 0;
+                city.Damage = 0;
+                city.Cost = city.StartCost;
             }
         }
     }

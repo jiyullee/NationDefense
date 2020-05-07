@@ -6,6 +6,7 @@ public class City_Damage : MonoBehaviour
 {
     City city;
     [SerializeField] private UI_CityInfo UI_CityInfo;
+    [SerializeField] SpriteRenderer spriteRenderer;
     [SerializeField] LayerMask layerMask;
 
     [SerializeField] private int disaster_Count = 0;
@@ -24,36 +25,26 @@ public class City_Damage : MonoBehaviour
     {
         if (gameObject.layer == 8) // 미감염 
         {
-            IncreaseCount();
-            city.Damage = damage;
-            gameObject.layer = 9;
-            UI_CityInfo.SituationText.text = disaster;
+            Damage(damage);
         }
         else if (gameObject.layer == 10) // 안전
         {
             city.Hp -= damage;
             if (city.Hp < 0)
             {
-                IncreaseCount();
-                city.Damage = damage - city.Hp;
-                gameObject.layer = 9;
-                UI_CityInfo.SituationText.text = disaster;
+                Damage(damage - city.Hp);
             }
             else if (city.Hp == 0)
             {
-                gameObject.layer = 8;
+                UnDamage();
             }
             else
             {
-                UI_CityInfo.SituationText.text = "안전";
+                Safe();
             }
         }else if(gameObject.layer == 9)
         {
-            city.Damage += damage;
-            if(city.Damage >= city.MaxDamage)
-            {
-                city.Damage = city.MaxDamage;
-            }
+            More_Damage(damage);
         }
     }
 
@@ -87,7 +78,61 @@ public class City_Damage : MonoBehaviour
         if (disaster_Count % 5 == 0)
         {
             city.Damage++;
+            if (city.Damage >= city.MaxDamage)
+            {
+                city.Damage = city.MaxDamage;
+            }
         }
+        UI_CityInfo.DamageText.text = city.Damage.ToString();
         UI_CityInfo.Day_SituationText.text = disaster_Count.ToString() + "일차";
+    }
+
+    public void Damage(int damage)
+    {
+        gameObject.layer = 9;
+        gameObject.tag = "Infect";
+        spriteRenderer.color = Color.red;
+
+        city.Hp = 0;
+        city.Damage = damage;
+        city.Cost += damage;
+        UI_CityInfo.Infected(disaster, ++disaster_Count);       
+    }
+
+    public void More_Damage(int damage)
+    {
+        city.Damage += damage;
+        if (city.Damage >= city.MaxDamage)
+        {
+            city.Damage = city.MaxDamage;
+        }
+        city.Cost += damage;
+        
+        UI_CityInfo.Infected(disaster, ++disaster_Count);
+    }
+    public void UnDamage()
+    {
+        gameObject.layer = 8;
+        gameObject.tag = "Uninfect";
+        spriteRenderer.color = Color.white;
+
+        disaster_Count = 0;
+        disaster = "";
+        city.Hp = 0;
+        city.Damage = 0;
+        city.Cost = city.StartCost;
+        UI_CityInfo.Uninfected();
+    }
+
+    public void Safe()
+    {
+        gameObject.layer = 10;
+        gameObject.tag = "Taken";
+        spriteRenderer.color = Color.blue;
+
+        disaster_Count = 0;
+        city.Damage = 0;
+        city.Cost = city.StartCost;
+        UI_CityInfo.Taken();
     }
 }

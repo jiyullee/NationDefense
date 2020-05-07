@@ -59,6 +59,11 @@ public class LevelManager : MonoBehaviour
     {
         isRound = true;
         day++;
+
+        UI_CityInfo[] uI_CityInfos = FindObjectsOfType<UI_CityInfo>();
+        foreach (var city in uI_CityInfos)
+            city.gameObject.SetActive(false);
+
         GameObject[] infected_Cities = GameObject.FindGameObjectsWithTag("Infect");
         foreach(GameObject city in infected_Cities)
         {
@@ -74,8 +79,8 @@ public class LevelManager : MonoBehaviour
         
         if (day % 10 != 0)
         {
-            Enemy_Class_5 enemy_Class_5 = FindObjectOfType<Enemy_Class_5>();
-            enemy_Class_5.SelectDisaster();
+            Enemy_Class_1 enemy_Class_1 = FindObjectOfType<Enemy_Class_1>();
+            enemy_Class_1.SelectDisaster();
         }
         else if (day == 10)
         {
