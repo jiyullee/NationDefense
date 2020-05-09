@@ -7,6 +7,7 @@ public class UI_CityInfo : MonoBehaviour
     [SerializeField] private Text stateText;
     [SerializeField] private Text nameText;
     [SerializeField] private Text costText;
+    [SerializeField] private Text upgradeCostText;
     [SerializeField] private Text hpText;
     [SerializeField] private Text damageText;
     [SerializeField] private Text situationText;
@@ -24,10 +25,13 @@ public class UI_CityInfo : MonoBehaviour
     public Text SituationText { get => situationText; set => situationText = value; }
     public Text Day_SituationText { get => day_SituationText; set => day_SituationText = value; }
     public Text DamageText { get => damageText; set => damageText = value; }
+    public Button UpgradeBtn { get => upgradeBtn; set => upgradeBtn = value; }
+    public Text HpText { get => hpText; set => hpText = value; }
 
     private void OnEnable()
     {
         costText.text = city.Cost.ToString();
+        upgradeCostText.text = city.UpgradeCost.ToString();
     }
     public void Uninfected()
     {
@@ -82,6 +86,12 @@ public class UI_CityInfo : MonoBehaviour
     public void OnClick_Upgrade()
     {
         city.Upgrade();
+    }
+
+    public void SetHP()
+    {
+        hpImg.fillAmount = (float)city.Hp / city.MaxHP;
+        hpText.text = city.Hp + "/" + city.MaxHP;
     }
     
 }

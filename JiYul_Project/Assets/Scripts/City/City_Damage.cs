@@ -84,7 +84,7 @@ public class City_Damage : MonoBehaviour
             }
         }
         UI_CityInfo.DamageText.text = city.Damage.ToString();
-        UI_CityInfo.Day_SituationText.text = disaster_Count.ToString() + "일차";
+        UI_CityInfo.Day_SituationText.text = "위험" + disaster_Count.ToString() + "일차";
     }
 
     public void Damage(int damage)

@@ -8,7 +8,7 @@ public class City : MonoBehaviour
     City_Damage city_Damage;
 
     [SerializeField] private UI_CityInfo UI_CityInfo;
-
+    [SerializeField] private SpriteRenderer synergy_SR;
     [SerializeField] private string stateName;
     [SerializeField] private string cityName;
 
@@ -18,7 +18,7 @@ public class City : MonoBehaviour
     [SerializeField] private int maxHP;
     [SerializeField] private int maxDamage;
     [SerializeField] private int _class;
-
+    [SerializeField] private int upgradeCost;
     private int startCost;
     public int Damage { get => damage; set => damage = value; }
     public int Hp { get => hp; set => hp = value; }
@@ -29,6 +29,7 @@ public class City : MonoBehaviour
     public int Class { get => _class; set => _class = value; }
     public int MaxDamage { get => maxDamage; set => maxDamage = value; }
     public int StartCost { get => startCost; set => startCost = value; }
+    public int UpgradeCost { get => upgradeCost; set => upgradeCost = value; }
 
     private void Awake()
     {
@@ -71,6 +72,14 @@ public class City : MonoBehaviour
 
     public void Upgrade()
     {
+        if (CoinManager.Instance.Gold >= upgradeCost)
+        {
+            CoinManager.Instance.Gold -= upgradeCost;
+            CanvasManager.Instance.SetCoinText(CoinManager.Instance.Gold);
+        }
+        else
+            return;
+
         _class++;
         if(_class >= 4)
         {
@@ -86,6 +95,16 @@ public class City : MonoBehaviour
         {
             maxHP = 15;
             hp = maxHP;
+            UI_CityInfo.UpgradeBtn.gameObject.SetActive(false);
+        }
+        UI_CityInfo.SetHP();
+    }
+
+    public void SelectSynergy(string stateName)
+    {
+        if(this.stateName == stateName)
+        {
+            synergy_SR.gameObject.SetActive(true);
         }
     }
     
