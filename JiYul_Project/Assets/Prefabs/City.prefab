@@ -1315,6 +1315,7 @@ GameObject:
   - component: {fileID: 1346759202371616240}
   - component: {fileID: 8360997528000887134}
   - component: {fileID: 8375288354952110338}
+  - component: {fileID: 846611427498292087}
   m_Layer: 8
   m_Name: City
   m_TagString: Uninfect
@@ -1352,6 +1353,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   UI_CityInfo: {fileID: 8314376845105323843}
+  synergy_SR: {fileID: 0}
   stateName: 
   cityName: 
   cost: 0
@@ -1361,6 +1363,8 @@ MonoBehaviour:
   maxDamage: 50
   _class: 0
   upgradeCost: 5
+  startCost: 0
+  city_Synergy: {fileID: 0}
 --- !u!114 &8360997528000887134
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1396,6 +1400,18 @@ MonoBehaviour:
   disaster_Count: 0
   disaster_Class: 0
   disaster: 
+--- !u!114 &846611427498292087
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5060656910873894838}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 926c5054abf67be4a815cdad79938fd7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5623601920337759814
 GameObject:
   m_ObjectHideFlags: 0

@@ -19,7 +19,10 @@ public class City : MonoBehaviour
     [SerializeField] private int maxDamage;
     [SerializeField] private int _class;
     [SerializeField] private int upgradeCost;
-    private int startCost;
+    [SerializeField] private int startCost;
+
+    [SerializeField] private City_Synergy city_Synergy;
+
     public int Damage { get => damage; set => damage = value; }
     public int Hp { get => hp; set => hp = value; }
     public string StateName { get => stateName; set => stateName = value; }
@@ -30,9 +33,11 @@ public class City : MonoBehaviour
     public int MaxDamage { get => maxDamage; set => maxDamage = value; }
     public int StartCost { get => startCost; set => startCost = value; }
     public int UpgradeCost { get => upgradeCost; set => upgradeCost = value; }
+    public City_Synergy City_Synergy { get => city_Synergy; set => city_Synergy = value; }
 
     private void Awake()
     {
+        city_Synergy = GetComponent<City_Synergy>();
         city_Damage = GetComponent<City_Damage>();
     }
     private void Start()
