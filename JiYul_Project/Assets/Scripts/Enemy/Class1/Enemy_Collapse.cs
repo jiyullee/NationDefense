@@ -15,7 +15,7 @@ public class Enemy_Collapse : Enemy_Class_1
         Random.InitState((int)(Time.time * 100f));
 
         City_Damage[] cities = FindObjectsOfType<City_Damage>();
-        int randCount = Random.Range(0, enemyCount);
+        int randCount = Random.Range(1, enemyCount);
         for (int i = 0; i < randCount; i++)
         {
             int rand = Random.Range(0, cities.Length);

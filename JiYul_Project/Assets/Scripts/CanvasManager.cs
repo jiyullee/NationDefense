@@ -18,10 +18,14 @@ public class CanvasManager : MonoBehaviour
         }
     }
 
+    public bool ChangeDayNight { get => changeDayNight; set => changeDayNight = value; }
+
     [SerializeField] Button roundStartBtn;
     [SerializeField] Image timeObj;
     [SerializeField] Text roundText;
     [SerializeField] Text coinText;
+
+    private bool changeDayNight;
     private void Start()
     {
         coinText.text = CoinManager.Instance.Gold.ToString();
@@ -33,10 +37,18 @@ public class CanvasManager : MonoBehaviour
         {
             timeObj.gameObject.SetActive(true);
             timeObj.fillAmount = LevelManager.Instance.CurrentWaitRoundTime / LevelManager.Instance.TotalWaitRoundTime;
+            if( 0.49 <= timeObj.fillAmount && timeObj.fillAmount <= 0.51 && changeDayNight == false)
+            {
+                changeDayNight = true;
+                if (timeObj.color == Color.white)
+                    timeObj.color = Color.black;
+                else if (timeObj.color == Color.black)
+                    timeObj.color = Color.white;
+            }
         }
         else
         {
-            timeObj.gameObject.SetActive(false);
+            //timeObj.gameObject.SetActive(false);
         }
 
     }

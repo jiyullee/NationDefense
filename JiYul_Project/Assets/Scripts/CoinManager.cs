@@ -21,8 +21,9 @@ public class CoinManager : MonoBehaviour
 
     [SerializeField] private int gold;
 
-    private void Start()
+    public void IncreaseGold(int n)
     {
-       
+        gold += n;
+        CanvasManager.Instance.SetCoinText(gold);
     }
 }

@@ -9,7 +9,7 @@ public class Enemy_Drought : Enemy_Class_2
         Random.InitState((int)(Time.time * 100f));
 
         City_Damage[] cities = FindObjectsOfType<City_Damage>();
-        int randCount = Random.Range(0, enemyCount);
+ 
         int rand = Random.Range(0, cities.Length);
         infectedCity = cities[rand];
         infectedCity.Disaster_Class = 2;

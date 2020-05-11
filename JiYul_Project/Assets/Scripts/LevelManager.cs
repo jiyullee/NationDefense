@@ -27,7 +27,7 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private int day;
     private int enemyCount = 1;
     private int damage = 1;
-
+    private int daynightCount = 0;
     private bool isStart;
     private float currentWaitRoundTime;
     [SerializeField] private float totalWaitRoundTime;
@@ -38,7 +38,7 @@ public class LevelManager : MonoBehaviour
     {
         day = 0;
         CanvasManager.Instance.SetRoundText(day);
-        currentWaitRoundTime = TotalWaitRoundTime;
+        currentWaitRoundTime = 0;
      
     }
 
@@ -46,11 +46,17 @@ public class LevelManager : MonoBehaviour
     {
         if (!isRound)
         {
-            currentWaitRoundTime -= Time.deltaTime;
-            if(currentWaitRoundTime <= 0)
+            currentWaitRoundTime += Time.deltaTime;
+            if(currentWaitRoundTime >= totalWaitRoundTime)
             {
-                StartDay();
-                currentWaitRoundTime = totalWaitRoundTime;
+                daynightCount++;
+                if(daynightCount == 2)
+                {
+                    StartDay();
+                    daynightCount = 0;
+                }
+                currentWaitRoundTime = 0;
+                CanvasManager.Instance.ChangeDayNight = false;
             }
         }
     }
@@ -59,6 +65,7 @@ public class LevelManager : MonoBehaviour
     {
         isRound = true;
         day++;
+        CoinManager.Instance.IncreaseGold(5);
 
         UI_CityInfo[] uI_CityInfos = FindObjectsOfType<UI_CityInfo>();
         foreach (var city in uI_CityInfos)
@@ -72,38 +79,36 @@ public class LevelManager : MonoBehaviour
         }
         CanvasManager.Instance.SetRoundText(day);
         SelectDisaster();
+        currentWaitRoundTime = 0;
     }
 
     public void SelectDisaster()
     {
-        
+        Enemy_Class_1 enemy_Class_1 = FindObjectOfType<Enemy_Class_1>();
+        Enemy_Class_2 enemy_Class_2 = FindObjectOfType<Enemy_Class_2>();
+        Enemy_Class_3 enemy_Class_3 = FindObjectOfType<Enemy_Class_3>();
+        Enemy_Class_4 enemy_Class_4 = FindObjectOfType<Enemy_Class_4>();
+        Enemy_Class_5 enemy_Class_5 = FindObjectOfType<Enemy_Class_5>();
         if (day % 10 != 0)
         {
-            Enemy_Class_1 enemy_Class_1 = FindObjectOfType<Enemy_Class_1>();
             enemy_Class_1.SelectDisaster();
         }
         else if (day == 10)
         {
-            Enemy_Class_2 enemy_Class_2 = FindObjectOfType<Enemy_Class_2>();
             enemy_Class_2.SelectDisaster();
 
         }
         else if(day == 20)
         {
-            Enemy_Class_2 enemy_Class_2 = FindObjectOfType<Enemy_Class_2>();
             enemy_Class_2.SelectDisaster();
         }else if(day == 30)
         {
-            Enemy_Class_3 enemy_Class_3 = FindObjectOfType<Enemy_Class_3>();
             enemy_Class_3.SelectDisaster();
         }else if(day == 40)
         {
-            Enemy_Class_4 enemy_Class_4 = FindObjectOfType<Enemy_Class_4>();
             enemy_Class_4.SelectDisaster();
         }else if(day == 50)
         {
-
-            Enemy_Class_5 enemy_Class_5 = FindObjectOfType<Enemy_Class_5>();
             enemy_Class_5.SelectDisaster();
         }
     }
