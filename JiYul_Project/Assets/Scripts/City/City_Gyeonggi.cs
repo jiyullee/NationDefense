@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class City_Gyeonggi : MonoBehaviour
 {
-    [SerializeField] private City_Synergy city_Synergy;
-
-    public City_Synergy City_Synergy { get => city_Synergy; set => city_Synergy = value; }
+    [SerializeField] private SpriteRenderer spriteRenderer;
+    public City_Synergy City_Synergy { get; set; }
 
     private void Awake()
     {
-        city_Synergy = GetComponent<City_Synergy>();
+        City_Synergy = GetComponent<City_Synergy>();
     }
+
+    
 }

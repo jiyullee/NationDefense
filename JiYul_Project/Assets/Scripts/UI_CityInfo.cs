@@ -4,77 +4,70 @@ using UnityEngine;
 using UnityEngine.UI;
 public class UI_CityInfo : MonoBehaviour
 {
-    [SerializeField] private Text stateText;
-    [SerializeField] private Text nameText;
-    [SerializeField] private Text costText;
-    [SerializeField] private Text upgradeCostText;
-    [SerializeField] private Text hpText;
-    [SerializeField] private Text damageText;
-    [SerializeField] private Text situationText;
-    [SerializeField] private Text day_SituationText;
-    [SerializeField] Button buyBtn;
-    [SerializeField] Button upgradeBtn;
-    [SerializeField] private GameObject hpObj;
-    [SerializeField] private GameObject damageObj;
-
-
     [SerializeField] private City city;
-    [SerializeField] private Image damageImg;
-    [SerializeField] private Image hpImg;
 
-    public Text SituationText { get => situationText; set => situationText = value; }
-    public Text Day_SituationText { get => day_SituationText; set => day_SituationText = value; }
-    public Text DamageText { get => damageText; set => damageText = value; }
-    public Button UpgradeBtn { get => upgradeBtn; set => upgradeBtn = value; }
-    public Text HpText { get => hpText; set => hpText = value; }
+    [SerializeField] Button btn_Buy;
+    [SerializeField] Button btn_Upgrade;
+    [SerializeField] private GameObject obj_HP;
+    [SerializeField] private GameObject obj_Damage;
+    [SerializeField] private GameObject obj_SkillTooltip;
+    [SerializeField] private Text text_State;
+    [SerializeField] private Text text_City;
+    [SerializeField] private Text text_Cost;
+    [SerializeField] private Text text_UpgradeCost;
+    [SerializeField] private Text text_Disaster;
+    [SerializeField] private Text text_HP;
+    [SerializeField] private Text text_Damage;
+    [SerializeField] private Image image_HP;
+
+    public Text SituationText { get => text_Disaster; set => text_Disaster = value; }
+    public Text DamageText { get => text_Damage; set => text_Damage = value; }
+    public Button UpgradeBtn { get => btn_Upgrade; set => btn_Upgrade = value; }
+    public Text HpText { get => text_HP; set => text_HP = value; }
 
     private void OnEnable()
     {
-        costText.text = city.Cost.ToString();
-        upgradeCostText.text = city.UpgradeCost.ToString();
+        text_Cost.text = city.Cost.ToString();
+        text_UpgradeCost.text = city.UpgradeCost.ToString();
     }
     public void Uninfected()
     {
-        buyBtn.gameObject.SetActive(true);
-        upgradeBtn.gameObject.SetActive(false);
-        hpObj.SetActive(false);
-        damageObj.SetActive(false);
-        costText.text = city.Cost.ToString();
-        situationText.text = "";
-        day_SituationText.gameObject.SetActive(false);
+        btn_Buy.gameObject.SetActive(true);
+        btn_Upgrade.gameObject.SetActive(false);
+        obj_HP.SetActive(false);
+        obj_Damage.SetActive(false);
+        text_Cost.text = city.Cost.ToString();
+        text_Disaster.text = "";
     }
 
-    public void Infected(string disaster, int disasterCount)
+    public void Infected(string disaster)
     {
-        buyBtn.gameObject.SetActive(true);
-        upgradeBtn.gameObject.SetActive(false);
-        hpObj.SetActive(false);
-        damageObj.SetActive(true);
-        damageImg.fillAmount = city.Damage / city.MaxDamage;
-        damageText.text = city.Damage + "/" + city.MaxDamage;
-        costText.text = city.Cost.ToString();
-        situationText.text = disaster;
-        day_SituationText.text = "위험" + disasterCount.ToString() + "일차";
+        btn_Buy.gameObject.SetActive(true);
+        btn_Upgrade.gameObject.SetActive(false);
+        obj_HP.SetActive(false);
+        obj_Damage.SetActive(true);
+        text_Damage.text = city.Damage + "/" + city.MaxDamage;
+        text_Cost.text = city.Cost.ToString();
+        text_Disaster.text = disaster;
     }
 
     public void Taken()
     {
-        buyBtn.gameObject.SetActive(false);
-        upgradeBtn.gameObject.SetActive(true);
-        hpObj.SetActive(true);
-        damageObj.SetActive(false);
-        day_SituationText.gameObject.SetActive(false);
-        hpImg.fillAmount = (float)city.Hp / city.MaxHP;
-        hpText.text = city.Hp + "/" + city.MaxHP;
-        costText.text = city.Cost.ToString();
-        situationText.text = "안전";
+        btn_Buy.gameObject.SetActive(false);
+        btn_Upgrade.gameObject.SetActive(true);
+        obj_HP.SetActive(true);
+        obj_Damage.SetActive(false);
+        image_HP.fillAmount = (float)city.Hp / city.MaxHP;
+        text_HP.text = city.Hp + "/" + city.MaxHP;
+        text_Cost.text = city.Cost.ToString();
+        text_Disaster.text = "안전";
     }
 
     public void SetInfo()
     {
-        stateText.text = city.StateName;
-        nameText.text = city.CityName;
-        costText.text = city.Cost.ToString();
+        text_State.text = city.StateName;
+        text_City.text = city.CityName;
+        text_Cost.text = city.Cost.ToString();
         
     }
 
@@ -88,10 +81,23 @@ public class UI_CityInfo : MonoBehaviour
         city.Upgrade();
     }
 
+    public void OnClick_ShowSkill()
+    {
+        if(obj_SkillTooltip.activeSelf)
+            obj_SkillTooltip.SetActive(false);
+        else
+            obj_SkillTooltip.SetActive(true);
+    }
+
     public void SetHP()
     {
-        hpImg.fillAmount = (float)city.Hp / city.MaxHP;
-        hpText.text = city.Hp + "/" + city.MaxHP;
+        image_HP.fillAmount = (float)city.Hp / city.MaxHP;
+        text_HP.text = city.Hp + "/" + city.MaxHP;
     }
-    
+
+    private void OnDisable()
+    {
+        obj_SkillTooltip.gameObject.SetActive(false);
+    }
+
 }

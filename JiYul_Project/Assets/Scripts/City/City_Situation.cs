@@ -23,7 +23,6 @@ public class City_Situation : MonoBehaviour
             {
                 gameObject.tag = "Uninfect";
                 spriteRenderer.color = Color.white;
-                City_Damage.Disaster_Count = 0;
                 City_Damage.Disaster = "";
                 city.Damage = 0;
                 city.Cost = city.StartCost;
@@ -38,7 +37,6 @@ public class City_Situation : MonoBehaviour
             {
                 gameObject.tag = "Taken";
                 spriteRenderer.color = Color.blue;
-                City_Damage.Disaster_Count = 0;
                 city.Damage = 0;
                 city.Cost = city.StartCost;
             }

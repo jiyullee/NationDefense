@@ -5,13 +5,8 @@ using UnityEngine.UI;
 
 public class City : MonoBehaviour
 {
-    City_Damage city_Damage;
-
-    [SerializeField] private UI_CityInfo UI_CityInfo;
-    [SerializeField] private SpriteRenderer synergy_SR;
     [SerializeField] private string stateName;
     [SerializeField] private string cityName;
-
     [SerializeField] private int cost;
     [SerializeField] private int hp;
     [SerializeField] private int damage;
@@ -20,8 +15,7 @@ public class City : MonoBehaviour
     [SerializeField] private int _class;
     [SerializeField] private int upgradeCost;
     [SerializeField] private int startCost;
-
-    [SerializeField] private City_Synergy city_Synergy;
+    [SerializeField] private SpriteRenderer[] sr_Synergies;
 
     public int Damage { get => damage; set => damage = value; }
     public int Hp { get => hp; set => hp = value; }
@@ -33,12 +27,16 @@ public class City : MonoBehaviour
     public int MaxDamage { get => maxDamage; set => maxDamage = value; }
     public int StartCost { get => startCost; set => startCost = value; }
     public int UpgradeCost { get => upgradeCost; set => upgradeCost = value; }
-    public City_Synergy City_Synergy { get => city_Synergy; set => city_Synergy = value; }
+    public City_Synergy City_Synergy { get; set; }
+    private UI_CityInfo UI_CityInfo;
+    private City_Damage City_Damage;
+
 
     private void Awake()
     {
-        city_Synergy = GetComponent<City_Synergy>();
-        city_Damage = GetComponent<City_Damage>();
+        City_Synergy = GetComponent<City_Synergy>();
+        City_Damage = GetComponent<City_Damage>();
+        UI_CityInfo = GetComponentInChildren<UI_CityInfo>();
     }
     private void Start()
     {
@@ -71,7 +69,7 @@ public class City : MonoBehaviour
         else
             return;
         hp = 5;
-        city_Damage.Safe();
+        City_Damage.Safe();
         
     }
 
@@ -105,12 +103,19 @@ public class City : MonoBehaviour
         UI_CityInfo.SetHP();
     }
 
-    public void SelectSynergy(string stateName)
+    public void SelectedSynergy()
     {
-        if(this.stateName == stateName)
+        foreach(var sr in sr_Synergies)
         {
-            synergy_SR.gameObject.SetActive(true);
+            sr.color = Color.yellow;
         }
     }
-    
+
+    public void UnSelectedSynergy()
+    {
+        foreach (var sr in sr_Synergies)
+        {
+            sr.color = Color.black;
+        }
+    }
 }

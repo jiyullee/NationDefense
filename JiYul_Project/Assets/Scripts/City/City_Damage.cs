@@ -8,12 +8,9 @@ public class City_Damage : MonoBehaviour
     [SerializeField] private UI_CityInfo UI_CityInfo;
     [SerializeField] SpriteRenderer spriteRenderer;
     [SerializeField] LayerMask layerMask;
-
-    [SerializeField] private int disaster_Count = 0;
     [SerializeField] private int disaster_Class;
     [SerializeField] private string disaster;
 
-    public int Disaster_Count { get => disaster_Count; set => disaster_Count = value; }
     public int Disaster_Class { get => disaster_Class; set => disaster_Class = value; }
     public string Disaster { get => disaster; set => disaster = value; }
     private void Awake()
@@ -72,21 +69,6 @@ public class City_Damage : MonoBehaviour
 
     }
 
-    public void IncreaseCount()
-    {
-        disaster_Count++;
-        if (disaster_Count % 5 == 0)
-        {
-            city.Damage++;
-            if (city.Damage >= city.MaxDamage)
-            {
-                city.Damage = city.MaxDamage;
-            }
-        }
-        UI_CityInfo.DamageText.text = city.Damage.ToString();
-        UI_CityInfo.Day_SituationText.text = "위험" + disaster_Count.ToString() + "일차";
-    }
-
     public void Damage(int damage)
     {
         gameObject.layer = 9;
@@ -96,7 +78,7 @@ public class City_Damage : MonoBehaviour
         city.Hp = 0;
         city.Damage = damage;
         city.Cost += damage;
-        UI_CityInfo.Infected(disaster, ++disaster_Count);       
+        UI_CityInfo.Infected(disaster);       
     }
 
     public void More_Damage(int damage)
@@ -108,7 +90,7 @@ public class City_Damage : MonoBehaviour
         }
         city.Cost += damage;
         
-        UI_CityInfo.Infected(disaster, ++disaster_Count);
+        UI_CityInfo.Infected(disaster);
     }
     public void UnDamage()
     {
@@ -116,7 +98,6 @@ public class City_Damage : MonoBehaviour
         gameObject.tag = "Uninfect";
         spriteRenderer.color = Color.white;
 
-        disaster_Count = 0;
         disaster = "";
         city.Hp = 0;
         city.Damage = 0;
@@ -130,7 +111,6 @@ public class City_Damage : MonoBehaviour
         gameObject.tag = "Taken";
         spriteRenderer.color = Color.blue;
 
-        disaster_Count = 0;
         city.Damage = 0;
         city.Cost = city.StartCost;
         UI_CityInfo.Taken();

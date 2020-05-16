@@ -17,69 +17,59 @@ public class LevelManager : MonoBehaviour
         }
     }
 
-    public float CurrentWaitRoundTime { get => currentWaitRoundTime; set => currentWaitRoundTime = value; }
     public bool IsRound { get => isRound; set => isRound = value; }
-    public float TotalWaitRoundTime { get => totalWaitRoundTime; set => totalWaitRoundTime = value; }
     public int Day { get => day; set => day = value; }
     public int Phase { get => phase; set => phase = value; }
+    public int CurrentHour { get => currentHour; set => currentHour = value; }
+    public float CurrentTime { get => currentTime; set => currentTime = value; }
+    public float HoutPerSecond { get => houtPerSecond; set => houtPerSecond = value; }
 
     [SerializeField] private int phase;
-    [SerializeField] private int day;
+    [SerializeField] private int day = 1;
     private int enemyCount = 1;
     private int damage = 1;
     private int daynightCount = 0;
     private bool isStart;
-    private float currentWaitRoundTime;
-    [SerializeField] private float totalWaitRoundTime;
 
     [SerializeField] private bool isRound;
+    [SerializeField] private int currentHour;
+    [SerializeField] private float currentTime = 0;
+    [SerializeField] private float houtPerSecond = 0;
 
     void Start()
     {
-        day = 0;
-        CanvasManager.Instance.SetRoundText(day);
-        currentWaitRoundTime = 0;
-     
+        CanvasManager.Instance.SetRoundText(day);    
     }
 
     private void Update()
     {
         if (!isRound)
         {
-            currentWaitRoundTime += Time.deltaTime;
-            if(currentWaitRoundTime >= totalWaitRoundTime)
+            currentTime += Time.deltaTime * houtPerSecond;
+            if(currentTime >= 24)
             {
-                daynightCount++;
-                if(daynightCount == 2)
-                {
-                    StartDay();
-                    daynightCount = 0;
-                }
-                currentWaitRoundTime = 0;
-                CanvasManager.Instance.ChangeDayNight = false;
+                currentTime = 0;
+                StartDay();
             }
         }
+        CurrentHour = (int)currentTime;
     }
 
     public void StartDay()
     {
         isRound = true;
         day++;
+        CanvasManager.Instance.SetRoundText(day);
         CoinManager.Instance.IncreaseGold(5);
-
-        UI_CityInfo[] uI_CityInfos = FindObjectsOfType<UI_CityInfo>();
-        foreach (var city in uI_CityInfos)
-            city.gameObject.SetActive(false);
 
         GameObject[] infected_Cities = GameObject.FindGameObjectsWithTag("Infect");
         foreach(GameObject city in infected_Cities)
         {
-            city.GetComponent<City_Damage>().IncreaseCount();
             city.GetComponent<City_Damage>().Spread_Disaster();
         }
-        CanvasManager.Instance.SetRoundText(day);
+        
         SelectDisaster();
-        currentWaitRoundTime = 0;
+        currentTime = 0;
     }
 
     public void SelectDisaster()

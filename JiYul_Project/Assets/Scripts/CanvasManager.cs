@@ -17,54 +17,50 @@ public class CanvasManager : MonoBehaviour
             return instance;
         }
     }
-
-    public bool ChangeDayNight { get => changeDayNight; set => changeDayNight = value; }
-
-    [SerializeField] Button roundStartBtn;
-    [SerializeField] Image timeObj;
-    [SerializeField] Text roundText;
-    [SerializeField] Text coinText;
+    [SerializeField] private LayerMask layerMask;
+    [SerializeField] Image timeImg;
+    [SerializeField] Text text_Round;
+    [SerializeField] Text text_Coin;
 
     private bool changeDayNight;
+
     private void Start()
     {
-        coinText.text = CoinManager.Instance.Gold.ToString();
-        roundText.text = "";
+        text_Coin.text = CoinManager.Instance.Gold.ToString();
+        text_Round.text = "";
     }
     private void Update()
     {
-        if (!LevelManager.Instance.IsRound)
+       
+        if (Input.GetMouseButton(0))
         {
-            timeObj.gameObject.SetActive(true);
-            timeObj.fillAmount = LevelManager.Instance.CurrentWaitRoundTime / LevelManager.Instance.TotalWaitRoundTime;
-            if( 0.49 <= timeObj.fillAmount && timeObj.fillAmount <= 0.51 && changeDayNight == false)
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit2D hit = Physics2D.GetRayIntersection(ray, Mathf.Infinity, layerMask);
+            if (hit.collider == null)
             {
-                changeDayNight = true;
-                if (timeObj.color == Color.white)
-                    timeObj.color = Color.black;
-                else if (timeObj.color == Color.black)
-                    timeObj.color = Color.white;
+                UI_SynergyInfo UI_SynergyInfo = FindObjectOfType<UI_SynergyInfo>();
+                UI_SkillTooltip UI_SkillTooltip = FindObjectOfType<UI_SkillTooltip>();
+                if (UI_SynergyInfo != null)
+                {
+                    UI_SynergyInfo.gameObject.SetActive(false);
+                }
+                if (UI_SkillTooltip != null)
+                {
+                    UI_SkillTooltip.gameObject.SetActive(false);
+                }
             }
         }
-        else
-        {
-            //timeObj.gameObject.SetActive(false);
-        }
 
-    }
-
-    public void OnClick_StartRound()
-    {
-        LevelManager.Instance.StartDay();
     }
 
     public void SetRoundText(int round)
     {
-        roundText.text = round.ToString();
+        text_Round.text = round.ToString();
     }
 
     public void SetCoinText(int coin)
     {
-        coinText.text = coin.ToString();
+        text_Coin.text = coin.ToString();
     }
+
 }

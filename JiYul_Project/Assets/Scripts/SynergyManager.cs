@@ -26,19 +26,20 @@ public class SynergyManager : MonoBehaviour
     [SerializeField] private int[] count = new int[8];
     private City[] cities;
     private string[] stateNames;
-
-    [SerializeField] private GameObject[] panels;
+    private Vector3 startPos;
 
     private void Awake()
     {
         synergies = FindObjectsOfType<Synergy>();
-
         cities = FindObjectsOfType<City>();
         stateNames = new string[] { "경기도", "강원도", "충청북도", "충청남도", "경상북도", "경상남도", "전라북도", "전라남도" };
+
+        startPos = transform.position;
     }
 
     private void Start()
     {
+       
         StartCoroutine(CountSynergy());
     }
 
@@ -72,21 +73,16 @@ public class SynergyManager : MonoBehaviour
     {       
         foreach (var synergy in synergies)
             synergy.HideSynergyInfo();
-        OffPanels();
     }
 
-    public void OffPanels()
+    public void SetPos_OnCityUI()
     {
-        for (int i = 0; i < panels.Length; i++)
-        {
-            panels[i].SetActive(false);
-        }
+        transform.position = startPos + new Vector3(0, 120f, 0);
+
     }
-    public void OnPanels()
+    public void SetPos_OffCityUI()
     {
-        for (int i = 0; i < panels.Length; i++)
-        {
-            panels[i].SetActive(true);
-        }
+        transform.position = startPos;
+        
     }
 }
