@@ -14,7 +14,6 @@ public class Enemy_NuclearBomb : Enemy_Class_5
             city.Disaster_Class = 5;
             city.Start_Disaster(damage);
         }
-        LevelManager.Instance.IsRound = false;
     }
 }
 

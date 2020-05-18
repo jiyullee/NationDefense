@@ -16,6 +16,5 @@ public class Enemy_Heavy_Snow : Enemy_Class_2
         infectedCity.Disaster = "폭설";
         cities[rand].Start_Disaster(damage);
 
-        LevelManager.Instance.IsRound = false;
     }
 }

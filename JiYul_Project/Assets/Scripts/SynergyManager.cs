@@ -77,7 +77,7 @@ public class SynergyManager : MonoBehaviour
 
     public void SetPos_OnCityUI()
     {
-        transform.position = startPos + new Vector3(0, 120f, 0);
+        transform.position = startPos + new Vector3(0, 100f, 0);
 
     }
     public void SetPos_OffCityUI()

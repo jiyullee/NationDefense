@@ -7,77 +7,46 @@ public class City : MonoBehaviour
 {
     [SerializeField] private string stateName;
     [SerializeField] private string cityName;
-    [SerializeField] private int cost;
-    [SerializeField] private int hp;
-    [SerializeField] private int damage;
-    [SerializeField] private int maxHP;
-    [SerializeField] private int maxDamage;
-    [SerializeField] private int _class;
-    [SerializeField] private int upgradeCost;
-    [SerializeField] private int startCost;
+    [SerializeField] private int _class = 1;
+
     [SerializeField] private SpriteRenderer[] sr_Synergies;
 
-    public int Damage { get => damage; set => damage = value; }
-    public int Hp { get => hp; set => hp = value; }
     public string StateName { get => stateName; set => stateName = value; }
     public string CityName { get => cityName; set => cityName = value; }
-    public int Cost { get => cost; set => cost = value; }
-    public int MaxHP { get => maxHP; set => maxHP = value; }
+
     public int Class { get => _class; set => _class = value; }
-    public int MaxDamage { get => maxDamage; set => maxDamage = value; }
-    public int StartCost { get => startCost; set => startCost = value; }
-    public int UpgradeCost { get => upgradeCost; set => upgradeCost = value; }
     public City_Synergy City_Synergy { get; set; }
-    private UI_CityInfo UI_CityInfo;
+    [SerializeField] private UI_CityInfo UI_CityInfo;
     private City_Damage City_Damage;
+    private City_Entity City_Entity;
 
 
     private void Awake()
     {
         City_Synergy = GetComponent<City_Synergy>();
         City_Damage = GetComponent<City_Damage>();
-        UI_CityInfo = GetComponentInChildren<UI_CityInfo>();
+        City_Entity = GetComponent<City_Entity>();
     }
-    private void Start()
-    {
-        
-        string city_Class = cityName.Substring(cityName.Length - 1, 1);
-        if (city_Class == "군")
-            cost = 1;
-        else if (stateName.Length != 0 && city_Class == "시")
-            cost = 2;
-        else if (stateName.Length == 0 && cityName != "서울특별시")
-            cost = 3;
-        else if (cityName == "서울특별시")
-            cost = 4;
-        startCost = cost;
-        _class = 1;
-        maxHP = 5;
-        maxDamage = 50;
-        hp = maxHP;
-
-    }
-
     
     public void Buy()
     {
-        if (CoinManager.Instance.Gold >= cost)
+        if (CoinManager.Instance.Gold >= City_Entity.Cost)
         {
-            CoinManager.Instance.Gold -= cost;
+            CoinManager.Instance.Gold -= City_Entity.Cost;
             CanvasManager.Instance.SetCoinText(CoinManager.Instance.Gold);
         }
         else
             return;
-        hp = 5;
+        City_Entity.HP = City_Entity.MaxHP;
         City_Damage.Safe();
         
     }
 
     public void Upgrade()
     {
-        if (CoinManager.Instance.Gold >= upgradeCost)
+        if (CoinManager.Instance.Gold >= City_Entity.Cost)
         {
-            CoinManager.Instance.Gold -= upgradeCost;
+            CoinManager.Instance.Gold -= City_Entity.Cost;
             CanvasManager.Instance.SetCoinText(CoinManager.Instance.Gold);
         }
         else
@@ -91,13 +60,13 @@ public class City : MonoBehaviour
 
         if (_class == 2)
         {
-            maxHP = 10;
-            hp = maxHP;
+            City_Entity.MaxHP = 10;
+            City_Entity.HP = City_Entity.MaxHP;
         }
         else if (_class == 3)
         {
-            maxHP = 15;
-            hp = maxHP;
+            City_Entity.MaxHP = 15;
+            City_Entity.HP = City_Entity.MaxHP;
             UI_CityInfo.UpgradeBtn.gameObject.SetActive(false);
         }
         UI_CityInfo.SetHP();

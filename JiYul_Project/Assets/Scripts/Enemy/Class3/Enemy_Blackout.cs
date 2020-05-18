@@ -29,6 +29,5 @@ public class Enemy_Blackout : Enemy_Class_3
             city_Damage.Start_Disaster(damage);
             yield return new WaitForSeconds(0.1f);
         }
-        LevelManager.Instance.IsRound = false;
     }
 }

@@ -16,8 +16,6 @@ public class LevelManager : MonoBehaviour
             return instance;
         }
     }
-
-    public bool IsRound { get => isRound; set => isRound = value; }
     public int Day { get => day; set => day = value; }
     public int Phase { get => phase; set => phase = value; }
     public int CurrentHour { get => currentHour; set => currentHour = value; }
@@ -31,7 +29,6 @@ public class LevelManager : MonoBehaviour
     private int daynightCount = 0;
     private bool isStart;
 
-    [SerializeField] private bool isRound;
     [SerializeField] private int currentHour;
     [SerializeField] private float currentTime = 0;
     [SerializeField] private float houtPerSecond = 0;
@@ -43,21 +40,17 @@ public class LevelManager : MonoBehaviour
 
     private void Update()
     {
-        if (!isRound)
+        currentTime += Time.deltaTime * houtPerSecond;
+        if (currentTime >= 24)
         {
-            currentTime += Time.deltaTime * houtPerSecond;
-            if(currentTime >= 24)
-            {
-                currentTime = 0;
-                StartDay();
-            }
+            currentTime = 0;
+            StartDay();
         }
         CurrentHour = (int)currentTime;
     }
 
     public void StartDay()
     {
-        isRound = true;
         day++;
         CanvasManager.Instance.SetRoundText(day);
         CoinManager.Instance.IncreaseGold(5);

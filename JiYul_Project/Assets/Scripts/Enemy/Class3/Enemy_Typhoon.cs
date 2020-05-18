@@ -37,7 +37,6 @@ public class Enemy_Typhoon : Enemy_Class_3
             transform.Translate(randX, randY, 0);
             near_Cities = Physics2D.OverlapAreaAll(transform.position, transform.position + new Vector3(randX, randY, 0), layerMask);
         }
-        LevelManager.Instance.IsRound = false;
         transform.position = originPos;
     }
 }

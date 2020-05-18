@@ -24,6 +24,5 @@ public class Enemy_Sinkhole : Enemy_Class_1
             cities[rand].Start_Disaster(damage);
             yield return new WaitForSeconds(0.5f);
         }
-        LevelManager.Instance.IsRound = false;
     }
 }

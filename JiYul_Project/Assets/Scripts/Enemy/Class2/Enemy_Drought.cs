@@ -16,7 +16,6 @@ public class Enemy_Drought : Enemy_Class_2
         infectedCity.Disaster = "가뭄";
         cities[rand].Start_Disaster(damage);
 
-        LevelManager.Instance.IsRound = false;
     }
    
 }

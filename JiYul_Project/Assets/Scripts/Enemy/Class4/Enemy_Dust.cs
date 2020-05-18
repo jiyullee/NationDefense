@@ -18,7 +18,5 @@ public class Enemy_Dust : Enemy_Class_4
             city.Disaster_Class = 4;
             city.Start_Disaster(damage);
         }
-
-        LevelManager.Instance.IsRound = false;
     }
 }

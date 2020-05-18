@@ -7,6 +7,7 @@ TagManager:
   - Infect
   - Uninfect
   - Taken
+  - Range
   layers:
   - Default
   - TransparentFX

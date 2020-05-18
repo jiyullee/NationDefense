@@ -16,6 +16,5 @@ public class Enemy_Forest_Fires : Enemy_Class_2
         infectedCity.Disaster = "산불";
         cities[rand].Start_Disaster(damage);
 
-        LevelManager.Instance.IsRound = false;
     }
 }

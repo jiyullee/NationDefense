@@ -21,7 +21,7 @@ public class CanvasManager : MonoBehaviour
     [SerializeField] Image timeImg;
     [SerializeField] Text text_Round;
     [SerializeField] Text text_Coin;
-
+    [SerializeField] GameObject prefab_SkillRange;
     private bool changeDayNight;
 
     private void Start()
@@ -42,7 +42,11 @@ public class CanvasManager : MonoBehaviour
                 UI_SkillTooltip UI_SkillTooltip = FindObjectOfType<UI_SkillTooltip>();
                 if (UI_SynergyInfo != null)
                 {
-                    UI_SynergyInfo.gameObject.SetActive(false);
+                    float posX = Input.mousePosition.x;
+                    float posY = Input.mousePosition.y;
+                    if ((0 <= posX && posX <= 720) && (0 <= posY && posY <= 100))
+                        return;
+                    SynergyManager.Instance.HideAllSynergyInfo();
                 }
                 if (UI_SkillTooltip != null)
                 {
@@ -61,6 +65,12 @@ public class CanvasManager : MonoBehaviour
     public void SetCoinText(int coin)
     {
         text_Coin.text = coin.ToString();
+    }
+
+    public void OnSkillRange(Vector3 pos, int radius)
+    {
+        GameObject obj = Instantiate(prefab_SkillRange, pos, Quaternion.identity);
+        obj.transform.localScale = new Vector3(100 + radius, 100 + radius, 1);
     }
 
 }

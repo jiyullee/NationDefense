@@ -5,6 +5,7 @@ using UnityEngine;
 public class City_Damage : MonoBehaviour
 {
     City city;
+    City_Entity City_Entity;
     [SerializeField] private UI_CityInfo UI_CityInfo;
     [SerializeField] SpriteRenderer spriteRenderer;
     [SerializeField] LayerMask layerMask;
@@ -16,32 +17,22 @@ public class City_Damage : MonoBehaviour
     private void Awake()
     {
         city = GetComponent<City>();
+        City_Entity = GetComponent<City_Entity>();
     }
 
     public void Start_Disaster(int damage)
     {
-        if (gameObject.layer == 8) // 미감염 
+        DecreaseHP(damage);
+        if(City_Entity.HP > 0)
         {
-            Damage(damage);
+            Safe();
+        }else if(City_Entity.HP == 0)
+        {
+            UnDamage();
         }
-        else if (gameObject.layer == 10) // 안전
+        else
         {
-            city.Hp -= damage;
-            if (city.Hp < 0)
-            {
-                Damage(damage - city.Hp);
-            }
-            else if (city.Hp == 0)
-            {
-                UnDamage();
-            }
-            else
-            {
-                Safe();
-            }
-        }else if(gameObject.layer == 9)
-        {
-            More_Damage(damage);
+            Damage();
         }
     }
 
@@ -69,27 +60,18 @@ public class City_Damage : MonoBehaviour
 
     }
 
-    public void Damage(int damage)
+    public void Damage()
     {
         gameObject.layer = 9;
         gameObject.tag = "Infect";
         spriteRenderer.color = Color.red;
 
-        city.Hp = 0;
-        city.Damage = damage;
-        city.Cost += damage;
         UI_CityInfo.Infected(disaster);       
     }
 
     public void More_Damage(int damage)
     {
-        city.Damage += damage;
-        if (city.Damage >= city.MaxDamage)
-        {
-            city.Damage = city.MaxDamage;
-        }
-        city.Cost += damage;
-        
+        DecreaseHP(damage);
         UI_CityInfo.Infected(disaster);
     }
     public void UnDamage()
@@ -97,11 +79,7 @@ public class City_Damage : MonoBehaviour
         gameObject.layer = 8;
         gameObject.tag = "Uninfect";
         spriteRenderer.color = Color.white;
-
         disaster = "";
-        city.Hp = 0;
-        city.Damage = 0;
-        city.Cost = city.StartCost;
         UI_CityInfo.Uninfected();
     }
 
@@ -110,9 +88,25 @@ public class City_Damage : MonoBehaviour
         gameObject.layer = 10;
         gameObject.tag = "Taken";
         spriteRenderer.color = Color.blue;
-
-        city.Damage = 0;
-        city.Cost = city.StartCost;
         UI_CityInfo.Taken();
+    }
+
+    public void IncreaseHP(int n)
+    {
+        if((n + City_Entity.HP) >= City_Entity.MaxHP)
+        {
+            City_Entity.HP = City_Entity.MaxHP;
+        }
+        else
+            City_Entity.HP += n;
+ 
+        UI_CityInfo.SetHP();
+    }
+
+    public void DecreaseHP(int n)
+    {
+        City_Entity.HP -= n;
+
+        UI_CityInfo.SetHP();
     }
 }

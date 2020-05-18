@@ -66,8 +66,7 @@ public class Enemy_War : Enemy_Class_5
         {
             if (isEnd[i])
             {
-                if (i == isEnd.Length - 1)
-                    LevelManager.Instance.IsRound = false;
+                                 
             }
             else
             {

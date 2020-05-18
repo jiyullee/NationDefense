@@ -8,20 +8,17 @@ public class UI_Clock : MonoBehaviour
     [SerializeField] private GameObject obj_HourHand;
     void Update()
     {
-        if (!LevelManager.Instance.IsRound)
+        obj_HourHand.transform.Rotate(new Vector3(0, 0, -30 * LevelManager.Instance.HoutPerSecond) * Time.deltaTime);
+        int currentHour = LevelManager.Instance.CurrentHour;
+        if (currentHour == 6) //아침
         {
-            obj_HourHand.transform.Rotate(new Vector3(0, 0, -30 * LevelManager.Instance.HoutPerSecond) * Time.deltaTime);
-            int currentHour = LevelManager.Instance.CurrentHour;
-            if (currentHour == 6) //아침
-            {
-                ChangeColor(Color.white, Color.black);
-            }
-            else if(currentHour == 18)
-            {
-                ChangeColor(Color.black, Color.white);
-            }
+            ChangeColor(Color.white, Color.black);
         }
-            
+        else if (currentHour == 18)
+        {
+            ChangeColor(Color.black, Color.white);
+        }
+
     }
 
     private void ChangeColor(Color bgColor, Color otherColor)
